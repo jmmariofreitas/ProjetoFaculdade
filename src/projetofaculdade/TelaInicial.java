@@ -6,9 +6,20 @@
 package projetofaculdade;
 
 import entity.Usuario;
+import java.awt.BorderLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Image;
+import java.awt.Insets;
 import java.awt.Toolkit;
 import javax.swing.JOptionPane;
 import projetofaculdade.dao.UsuarioDAO;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 /**
  *
@@ -19,12 +30,69 @@ public class TelaInicial extends javax.swing.JFrame {
     /**
      * Creates new form TelaInicial
      */
-    public TelaInicial() {
-        initComponents();
-         usuarioDAO = new UsuarioDAO();
-         setIcon();
-        
-    }
+       public TelaInicial() {
+           initComponents();
+           usuarioDAO = new UsuarioDAO();
+           setIcon();
+           atualizarDataHora(); // Chama o método para exibir a data e hora atuais
+           
+           //hints dos botões
+           hints();
+
+           // Define um temporizador para atualizar a cada segundo
+           javax.swing.Timer timer = new javax.swing.Timer(1000, e -> atualizarDataHora());
+           timer.start();
+            // Redimensione e defina a imagem para o botão
+            
+            configureTransparentButton(botao1, "/img/cad.png");
+            configureTransparentButton(botao2, "/img/edit.png");
+            configureTransparentButton(botao3, "/img/list.png");
+            configureTransparentButton(botao4, "/img/excluir.png");
+       
+
+    // Cria um novo painel para organizar o conteúdo
+           JPanel panel = new JPanel(new GridBagLayout());
+           GridBagConstraints gbc = new GridBagConstraints();
+           gbc.gridx = 0; // Define a posição x
+           gbc.gridy = 0; // Define a posição y
+           gbc.gridwidth = GridBagConstraints.REMAINDER; // Ocupa toda a largura
+           gbc.anchor = GridBagConstraints.PAGE_START; // Alinhamento no início da tela
+           gbc.insets = new Insets(20, 0, 0, 0); // Margem para a parte superior
+
+// Adiciona o JLabel 'titulo' com as configurações de GridBagConstraints
+           panel.add(titulo, gbc);
+
+// Cria um novo painel para o campo "dataHora"
+           JPanel dataHoraPanel = new JPanel();
+           dataHoraPanel.setLayout(new GridBagLayout());
+           GridBagConstraints dataHoraGBC = new GridBagConstraints();
+           dataHoraGBC.gridx = 0; // Define a posição x
+           dataHoraGBC.gridy = 0; // Define a posição y
+           dataHoraGBC.gridwidth = 1; // Ocupa uma única célula
+           dataHoraGBC.anchor = GridBagConstraints.LINE_END; // Alinhamento à direita
+
+// Adiciona o JLabel 'dataHora' ao novo painel
+           dataHoraPanel.add(dataHora, dataHoraGBC);
+
+// Adiciona o novo painel de dataHora ao painel principal
+           gbc.gridy = 1; // Posição abaixo do título
+           gbc.anchor = GridBagConstraints.PAGE_END; // Alinhamento no início da tela
+           gbc.insets = new Insets(0, 0, 0, 0); // Margem zero
+           panel.add(dataHoraPanel, gbc);
+
+// Adiciona o novo painel ao layout do conteúdo da tela
+           getContentPane().setLayout(new BorderLayout());
+           getContentPane().add(panel, BorderLayout.NORTH);
+
+
+    
+  }
+
+
+
+
+
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -35,7 +103,12 @@ public class TelaInicial extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
+        titulo = new javax.swing.JLabel();
+        dataHora = new javax.swing.JLabel();
+        botao1 = new javax.swing.JButton();
+        botao2 = new javax.swing.JButton();
+        botao4 = new javax.swing.JButton();
+        botao3 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -48,9 +121,34 @@ public class TelaInicial extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Tela Inicial");
 
-        jLabel1.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        jLabel1.setText("TELA DE CADASTRO");
-        jLabel1.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        titulo.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        titulo.setText("TELA DE CADASTRO");
+        titulo.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+
+        dataHora.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        dataHora.setText("Data/Hora");
+        dataHora.setAutoscrolls(true);
+
+        botao1.setBackground(java.awt.Color.white);
+        botao1.setForeground(new java.awt.Color(252, 252, 252));
+        botao1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/cad.png"))); // NOI18N
+        botao1.setText("Insert");
+        botao1.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                botao1MouseMoved(evt);
+            }
+        });
+        botao1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botao1ActionPerformed(evt);
+            }
+        });
+
+        botao2.setText("jButton1");
+
+        botao4.setText("jButton1");
+
+        botao3.setText("jButton1");
 
         jMenu1.setText("Arquivo");
 
@@ -102,16 +200,40 @@ public class TelaInicial extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(306, 306, 306)
-                .addComponent(jLabel1)
-                .addContainerGap(554, Short.MAX_VALUE))
+                .addComponent(titulo, javax.swing.GroupLayout.PREFERRED_SIZE, 694, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 615, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(dataHora, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addComponent(botao1, javax.swing.GroupLayout.PREFERRED_SIZE, 299, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(botao2, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(28, 28, 28)
+                .addComponent(botao3, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(botao4, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(100, 100, 100))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(29, 29, 29)
-                .addComponent(jLabel1)
-                .addContainerGap(442, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(36, 36, 36)
+                        .addComponent(titulo))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(145, 145, 145)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(botao1, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(botao2, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(botao4, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(botao3, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 196, Short.MAX_VALUE)
+                .addComponent(dataHora)
+                .addContainerGap())
         );
 
         pack();
@@ -165,6 +287,19 @@ public class TelaInicial extends javax.swing.JFrame {
          }
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
+    private void botao1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botao1ActionPerformed
+        // TODO add your handling code here:
+        
+         Cadastro chamarTelaCadastrarUsuario = new Cadastro();
+        chamarTelaCadastrarUsuario.setVisible(true);
+        
+        
+    }//GEN-LAST:event_botao1ActionPerformed
+
+    private void botao1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botao1MouseMoved
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botao1MouseMoved
+
     /**
      * @param args the command line arguments
      */
@@ -200,11 +335,50 @@ public class TelaInicial extends javax.swing.JFrame {
             }
         });
     }
+    private void atualizarDataHora() {
+        LocalDateTime dataHoraAtual = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+        String dataHoraFormatada = dataHoraAtual.format(formatter);
+        // Atualiza o texto do JLabel "dataHora"
+        dataHora.setText("" + dataHoraFormatada);
+    }
     
+     // Método para redimensionar e definir a imagem para um botão
+    private void setButtonImage(JButton button, String imagePath) {
+        ImageIcon icon = new ImageIcon(getClass().getResource(imagePath));
+        Image img = icon.getImage();
+        int newWidth = button.getWidth();  // Largura do botão
+        int newHeight = button.getHeight();  // Altura do botão
+        Image newImg = img.getScaledInstance(newWidth, newHeight, Image.SCALE_SMOOTH);
+        icon = new ImageIcon(newImg);
+        button.setIcon(icon);
+    }
+    
+     // Método para configurar um botão com imagem e torná-lo transparente
+    private void configureTransparentButton(JButton button, String imagePath) {
+        // Redimensiona e define a imagem para o botão
+        setButtonImage(button, imagePath);
+        
+        // Torna o botão transparente
+        button.setOpaque(false);
+        button.setContentAreaFilled(false);
+        button.setBorderPainted(false);
+    }
+    
+    private void hints(){
+        botao1.setToolTipText("Clique para Cadastrar");
+        botao2.setToolTipText("Este é o botão 2");
+        botao3.setToolTipText("Este é o botão 3");
+        botao4.setToolTipText("Este é o botão 4");
+    }
  
     private final UsuarioDAO usuarioDAO;
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton botao1;
+    private javax.swing.JButton botao2;
+    private javax.swing.JButton botao3;
+    private javax.swing.JButton botao4;
+    private javax.swing.JLabel dataHora;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
@@ -213,5 +387,6 @@ public class TelaInicial extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JLabel titulo;
     // End of variables declaration//GEN-END:variables
 }
