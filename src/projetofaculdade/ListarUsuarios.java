@@ -175,7 +175,7 @@ public class ListarUsuarios extends javax.swing.JFrame {
         atualizarTabela();
     }//GEN-LAST:event_jButton3ActionPerformed
 
-     private void excluirUsuario() {
+     void excluirUsuario() {
         String id = JOptionPane.showInputDialog("Informe o ID do usuário a ser excluído:");
 
         if (id != null && !id.isEmpty()) {

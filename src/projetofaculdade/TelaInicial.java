@@ -35,6 +35,8 @@ public class TelaInicial extends javax.swing.JFrame {
            usuarioDAO = new UsuarioDAO();
            setIcon();
            atualizarDataHora(); // Chama o método para exibir a data e hora atuais
+           //configurarPosicaoDosBotoes(); // Chame o novo método para configurar a posição dos botões
+           centralizarJanela();
            
            //hints dos botões
            hints();
@@ -46,7 +48,7 @@ public class TelaInicial extends javax.swing.JFrame {
             
             configureTransparentButton(botao1, "/img/cad.png");
             configureTransparentButton(botao2, "/img/edit.png");
-            configureTransparentButton(botao3, "/img/list.png");
+            configureTransparentButton(botao3, "/img/check.png");
             configureTransparentButton(botao4, "/img/excluir.png");
        
 
@@ -87,8 +89,39 @@ public class TelaInicial extends javax.swing.JFrame {
 
     
   }
+       
+        private void centralizarJanela() {
+        // Centralize a janela na tela
+        setLocationRelativeTo(null);
+    }
 
+  // Método para configurar a posição dos botões
+    private void configurarPosicaoDosBotoes() {
+        JPanel botoesPanel = new JPanel(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.insets = new Insets(10, 10, 10, 10);
 
+        // Adicione os botões ao painel com as configurações do GridBagConstraints
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        botoesPanel.add(botao1, gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        botoesPanel.add(botao2, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        botoesPanel.add(botao3, gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 1;
+        botoesPanel.add(botao4, gbc);
+
+        // Adicione o painel de botões ao JFrame
+        getContentPane().add(botoesPanel, BorderLayout.CENTER);
+    }
 
 
 
@@ -145,10 +178,25 @@ public class TelaInicial extends javax.swing.JFrame {
         });
 
         botao2.setText("jButton1");
+        botao2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botao2ActionPerformed(evt);
+            }
+        });
 
         botao4.setText("jButton1");
+        botao4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botao4ActionPerformed(evt);
+            }
+        });
 
         botao3.setText("jButton1");
+        botao3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botao3ActionPerformed(evt);
+            }
+        });
 
         jMenu1.setText("Arquivo");
 
@@ -201,37 +249,39 @@ public class TelaInicial extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(titulo, javax.swing.GroupLayout.PREFERRED_SIZE, 694, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 615, Short.MAX_VALUE))
+                .addGap(0, 762, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(dataHora, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addComponent(botao1, javax.swing.GroupLayout.PREFERRED_SIZE, 299, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(botao2, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28)
-                .addComponent(botao3, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(botao4, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(100, 100, 100))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(dataHora, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(botao1, javax.swing.GroupLayout.PREFERRED_SIZE, 299, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(29, 29, 29)
+                        .addComponent(botao2, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(50, 50, 50)
+                        .addComponent(botao3, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(43, 43, 43)
+                        .addComponent(botao4, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(114, 114, 114))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(36, 36, 36)
+                .addComponent(titulo)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 220, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(36, 36, 36)
-                        .addComponent(titulo))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(145, 145, 145)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(botao4, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(165, 165, 165))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(botao1, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(botao3, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(botao2, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(botao4, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(botao3, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 196, Short.MAX_VALUE)
+                            .addComponent(botao1, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(157, 157, 157)))
                 .addComponent(dataHora)
                 .addContainerGap())
         );
@@ -249,12 +299,7 @@ public class TelaInicial extends javax.swing.JFrame {
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
 
-        
-        
-        java.awt.EventQueue.invokeLater(() -> {
-                ListarUsuarios app = new ListarUsuarios();
-                app.setVisible(true);
-            }); 
+        chamarTelaDeListar();
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
@@ -266,6 +311,10 @@ public class TelaInicial extends javax.swing.JFrame {
     }
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
         // TODO add your handling code here:
+         chamaTelaDeEditar();
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    private void chamaTelaDeEditar(){
          String idUsuario = JOptionPane.showInputDialog("Digite o ID do usuário a ser editado:");
          if (idUsuario != null && !idUsuario.isEmpty()) {
              
@@ -280,13 +329,14 @@ public class TelaInicial extends javax.swing.JFrame {
                   editarUsuarioForm.setVisible(true); 
                   
               }else{
-                  System.out.println("Nenhum usuario encontrado para esse ID");
+                  JOptionPane.showMessageDialog(null, "Nenhum usuário encontrado para esse ID", "Mensagem", JOptionPane.INFORMATION_MESSAGE);
+                   chamaTelaDeEditar();
+
               
               }
          
          }
-    }//GEN-LAST:event_jMenuItem4ActionPerformed
-
+    }
     private void botao1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botao1ActionPerformed
         // TODO add your handling code here:
         
@@ -300,6 +350,29 @@ public class TelaInicial extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_botao1MouseMoved
 
+    private void botao2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botao2ActionPerformed
+        // TODO add your handling code here:
+       chamaTelaDeEditar();
+    }//GEN-LAST:event_botao2ActionPerformed
+
+    private void botao3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botao3ActionPerformed
+        // TODO add your handling code here:
+        chamarTelaDeListar();
+    }//GEN-LAST:event_botao3ActionPerformed
+
+    private void botao4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botao4ActionPerformed
+        // TODO add your handling code here:
+        ListarUsuarios listar = new ListarUsuarios();
+        listar.excluirUsuario();
+    }//GEN-LAST:event_botao4ActionPerformed
+
+    private void chamarTelaDeListar(){
+        
+        java.awt.EventQueue.invokeLater(() -> {
+            ListarUsuarios app = new ListarUsuarios();
+            app.setVisible(true);
+        });
+    }
     /**
      * @param args the command line arguments
      */
